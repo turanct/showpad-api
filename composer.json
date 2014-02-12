@@ -1,0 +1,24 @@
+{
+    "name": "sumocoders/showpad-api",
+    "description": "Wrapper for the Showpad API",
+    "type": "library",
+    "homepage": "http://www.sumocoders.be",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Toon Daelman",
+            "email": "toon@sumocoders.be",
+            "homepage": "http://turanct.wordpress.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "guzzle/guzzle": "dev-master"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-0": {
+            "Showpad": "src"
+        }
+    }
+}
