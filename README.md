@@ -3,6 +3,8 @@ Showpad API Wrapper
 
 This is a simple PHP wrapper for the Showpad API. It is built for v2 of the API, and it is currently incomplete.
 
+You can find the Showpad website [here](http://www.showpad.com)
+
 
 1. Features
 ----------------------------------------
@@ -38,12 +40,16 @@ Please use composer to autoload the Showpad api wrapper! Other methods are not e
 
 ### 2.2 Authentication
 
+- `SHOWPAD_URL` The api url, something like `https://yournamehere.showpad.biz/api/v2`
+- `SHOWPAD_APP_ID` The app's client id
+- `SHOWPAD_APP_SECRET` The app's secret
+
 #### 2.2.1 Step 1
 
     <?php
 
     // Create a config object
-    $config = new Showpad\ConfigBasic(SHOWPAD_URL, SHOWPAD_APP_KEY, SHOWPAD_APP_SECRET, null, null);
+    $config = new Showpad\ConfigBasic(SHOWPAD_URL, SHOWPAD_APP_ID, SHOWPAD_APP_SECRET, null, null);
 
     // Create an Authentication object, using the config
     $auth = new Showpad\Authentication($config);
@@ -60,7 +66,7 @@ Please use composer to autoload the Showpad api wrapper! Other methods are not e
     <?php
 
     // Create a config object
-    $config = new Showpad\ConfigBasic(SHOWPAD_URL, SHOWPAD_APP_KEY, SHOWPAD_APP_SECRET, null, null);
+    $config = new Showpad\ConfigBasic(SHOWPAD_URL, SHOWPAD_APP_ID, SHOWPAD_APP_SECRET, null, null);
 
     // Create an Authentication object, using the config
     $auth = new Showpad\Authentication($config);
@@ -81,7 +87,7 @@ Please note that the `access_token` is valid for only one hour. You'll need to u
     // Create a config object
     $config = new Showpad\ConfigBasic(
         SHOWPAD_URL,
-        SHOWPAD_APP_KEY,
+        SHOWPAD_APP_ID,
         SHOWPAD_APP_SECRET,
         $tokens['access_token'],
         $tokens['refresh_token']
@@ -107,7 +113,7 @@ Please note that the `access_token` is valid for only one hour. You'll need to u
     // Create a config object
     $config = new Showpad\ConfigBasic(
         SHOWPAD_URL,
-        SHOWPAD_APP_KEY,
+        SHOWPAD_APP_ID,
         SHOWPAD_APP_SECRET,
         $tokens['access_token'],
         $tokens['refresh_token']
