@@ -80,6 +80,31 @@ class Client
     }
 
     /**
+     * Get an asset by id
+     *
+     * GET /assets/{id}.json
+     *
+     * @param string $id The asset id
+     *
+     * @return array
+     */
+    public function assetsGet($id)
+    {
+        $resource = 'assets/' . $id . '.json';
+
+        // Create request
+        $request = $this->client->get(
+            $resource
+        );
+
+        // GET
+        $response = $request->send();
+        $data = $response->json();
+
+        return $data;
+    }
+
+    /**
      * Delete asset by id
      *
      * DELETE /assets/{id}.json
