@@ -213,4 +213,29 @@ class Client
 
         return $data;
     }
+
+    /**
+     * Get a ticket by id
+     *
+     * GET /tickets/{id}.json
+     *
+     * @param string $id The ticket id
+     *
+     * @return array
+     */
+    public function ticketsGet($id)
+    {
+        $resource = 'tickets/' . $id . '.json';
+
+        // Create request
+        $request = $this->client->get(
+            $resource
+        );
+
+        // GET
+        $response = $request->send();
+        $data = $response->json();
+
+        return $data;
+    }
 }
