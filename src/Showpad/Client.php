@@ -196,15 +196,20 @@ class Client
      *
      * GET /tags.json
      *
+     * @param int $limit  The max number of items we want to retrieve
+     * @param int $offset The number of items to skip from the top of the list
+     *
      * @return array
      */
-    public function tagsList()
+    public function tagsList($limit = 25, $offset = 0)
     {
         $resource = 'tags.json';
 
         // Create request
         $request = $this->client->get(
-            $resource
+            $resource,
+            array(),
+            array('query' => array('limit' => (int) $limit, 'offset' => (int) $offset))
         );
 
         // GET
