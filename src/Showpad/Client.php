@@ -93,9 +93,7 @@ class Client
         $resource = 'assets/' . $id . '.json';
 
         // Create request
-        $request = $this->client->get(
-            $resource
-        );
+        $request = $this->client->get($resource);
 
         // GET
         $response = $request->send();
@@ -233,9 +231,7 @@ class Client
         $resource = 'tickets/' . $id . '.json';
 
         // Create request
-        $request = $this->client->get(
-            $resource
-        );
+        $request = $this->client->get($resource);
 
         // GET
         $response = $request->send();
