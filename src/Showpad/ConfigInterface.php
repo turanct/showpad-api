@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the sumocoders/showpad-api library
+ * This file is part of the turanct/showpad-api library
  *
  * @category Library
  * @package  Showpad
