@@ -13,7 +13,7 @@
         }
     ],
     "require": {
-        "guzzle/guzzle": "dev-master"
+        "guzzlehttp/guzzle": "3.*"
     },
     "minimum-stability": "dev",
     "autoload": {
