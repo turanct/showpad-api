@@ -25,17 +25,19 @@ Please use composer to autoload the Showpad api wrapper! Other methods are not e
 
 *composer.json*
 
-    {
-        "repositories": [
-            {
-                "type": "git",
-                "url": "https://github.com/turanct/showpad-api.git"
-            }
-        ],
-        "require": {
-            "turanct/showpad-api": "master"
-        }
-    }
+```json
+{
+	"repositories": [
+		{
+			"type": "git",
+			"url": "https://github.com/turanct/showpad-api.git"
+		}
+	],
+	"require": {
+		"turanct/showpad-api": "master"
+	}
+}
+```
 
 
 ### 2.2 Authentication
@@ -46,61 +48,67 @@ Please use composer to autoload the Showpad api wrapper! Other methods are not e
 
 #### 2.2.1 Step 1
 
-    <?php
+```php
+<?php
 
-    // Create a config object
-    $config = new Showpad\ConfigBasic(SHOWPAD_URL, SHOWPAD_APP_ID, SHOWPAD_APP_SECRET, null, null);
+// Create a config object
+$config = new Showpad\ConfigBasic(SHOWPAD_URL, SHOWPAD_APP_ID, SHOWPAD_APP_SECRET, null, null);
 
-    // Create an Authentication object, using the config
-    $auth = new Showpad\Authentication($config);
+// Create an Authentication object, using the config
+$auth = new Showpad\Authentication($config);
 
-    // Get the url for the first step of the OAuth2 process
-    $authorizeUrl = $auth->authenticationStart(SHOWPAD_AUTH_REDIRECT_URL);
+// Get the url for the first step of the OAuth2 process
+$authorizeUrl = $auth->authenticationStart(SHOWPAD_AUTH_REDIRECT_URL);
 
-    // You should now redirect your user to this url, and let him authorize the application.
-    // If they authorized the application, you'll get a GET parameter 'code', which you'll need for step 2.
+// You should now redirect your user to this url, and let him authorize the application.
+// If they authorized the application, you'll get a GET parameter 'code', which you'll need for step 2.
+```
 
 
 #### 2.2.2 Step 2
 
-    <?php
+```php
+<?php
 
-    // Create a config object
-    $config = new Showpad\ConfigBasic(SHOWPAD_URL, SHOWPAD_APP_ID, SHOWPAD_APP_SECRET, null, null);
+// Create a config object
+$config = new Showpad\ConfigBasic(SHOWPAD_URL, SHOWPAD_APP_ID, SHOWPAD_APP_SECRET, null, null);
 
-    // Create an Authentication object, using the config
-    $auth = new Showpad\Authentication($config);
+// Create an Authentication object, using the config
+$auth = new Showpad\Authentication($config);
 
-    // Get the OAuth2 tokens using the code from the first step of the OAuth2 process
-    $tokens = $auth->authenticationFinish($codeFromFirstStep, SHOWPAD_AUTH_REDIRECT_URL);
+// Get the OAuth2 tokens using the code from the first step of the OAuth2 process
+$tokens = $auth->authenticationFinish($codeFromFirstStep, SHOWPAD_AUTH_REDIRECT_URL);
 
-    // If everything went ok, $tokens is now an associative array with keys 'access_token' and 'refresh_token'
-    // You should store these keys to be able to do requests in the future.
+// If everything went ok, $tokens is now an associative array with keys 'access_token' and 'refresh_token'
+// You should store these keys to be able to do requests in the future.
+```
 
 Please note that the `access_token` is valid for only one hour. You'll need to use the refresh flow to get a new access token.
 
 
 #### 2.2.3 Refresh flow
 
-    <?php
+```php
+<?php
 
-    // Create a config object
-    $config = new Showpad\ConfigBasic(
-        SHOWPAD_URL,
-        SHOWPAD_APP_ID,
-        SHOWPAD_APP_SECRET,
-        $tokens['access_token'],
-        $tokens['refresh_token']
-    );
+// Create a config object
+$config = new Showpad\ConfigBasic(
+	SHOWPAD_URL,
+	SHOWPAD_APP_ID,
+	SHOWPAD_APP_SECRET,
+	$tokens['access_token'],
+	$tokens['refresh_token']
+);
 
-    // Create an Authentication object, using the config
-    $auth = new Showpad\Authentication($config);
+// Create an Authentication object, using the config
+$auth = new Showpad\Authentication($config);
 
-    // Request new tokens
-    $tokens = $auth->refreshTokens();
+// Request new tokens
+$tokens = $auth->refreshTokens();
 
-    // If everything went ok, $tokens is now an associative array with the keys 'access_token' and 'refresh_token',
-    // containing fresh tokens. You should store these keys to be able to do requests in the future.
+// If everything went ok, $tokens is now an associative array with the keys 'access_token' and 'refresh_token',
+// containing fresh tokens. You should store these keys to be able to do requests in the future.
+```
 
 Please note that the `access_token` is valid for only one hour. You'll need to use the refresh flow to get a new access token.
 
@@ -108,23 +116,25 @@ Please note that the `access_token` is valid for only one hour. You'll need to u
 3. Usage
 ----------------------------------------
 
-    <?php
+```php
+<?php
 
-    // Create a config object
-    $config = new Showpad\ConfigBasic(
-        SHOWPAD_URL,
-        SHOWPAD_APP_ID,
-        SHOWPAD_APP_SECRET,
-        $tokens['access_token'],
-        $tokens['refresh_token']
-    );
+// Create a config object
+$config = new Showpad\ConfigBasic(
+	SHOWPAD_URL,
+	SHOWPAD_APP_ID,
+	SHOWPAD_APP_SECRET,
+	$tokens['access_token'],
+	$tokens['refresh_token']
+);
 
-    // Create an Authentication object, using the config
-    $auth = new Showpad\Authentication($config);
+// Create an Authentication object, using the config
+$auth = new Showpad\Authentication($config);
 
-    // Create a showpad client. This client contains all possible api methods.
-    $client = new Showpad\Client($auth);
+// Create a showpad client. This client contains all possible api methods.
+$client = new Showpad\Client($auth);
 
-    // You can now e.g. upload a file to showpad:
-    $client->assetsAdd($pathToFile);
+// You can now e.g. upload a file to showpad:
+$client->assetsAdd($pathToFile);
+```
 
