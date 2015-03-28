@@ -17,19 +17,9 @@ namespace Showpad;
 class Client
 {
     /**
-     * @var ConfigInterface The configuration object
-     */
-    protected $config;
-
-    /**
      * @var Authentication The authentication object
      */
     protected $auth;
-
-    /**
-     * @var \Guzzle\Http\Client Guzzle http client
-     */
-    protected $client;
 
     /**
      * Construct
@@ -39,13 +29,6 @@ class Client
     public function __construct(Authentication $auth)
     {
         $this->auth = $auth;
-        $this->config = $this->auth->getConfig();
-
-        // Create guzzle client
-        $this->client = new \Guzzle\Http\Client($this->config->getEndpoint());
-
-        // Client should always send OAuth2 tokens in its headers
-        $this->client->setDefaultOption('headers/Authorization', 'Bearer ' . $this->config->getAccessToken());
     }
 
     /**
@@ -59,22 +42,18 @@ class Client
      */
     public function assetsAdd($file)
     {
-        $resource = 'assets.json';
+        $resource = '/assets.json';
 
         $parameters = array(
             'file' => '@' . $file,
         );
 
         // Create request
-        $request = $this->client->post(
+        $data = $this->auth->request(
+            'POST',
             $resource,
-            array(),
             $parameters
         );
-
-        // POST
-        $response = $request->send();
-        $data = $response->json();
 
         return $data;
     }
@@ -90,14 +69,10 @@ class Client
      */
     public function assetsGet($id)
     {
-        $resource = 'assets/' . $id . '.json';
+        $resource = '/assets/' . $id . '.json';
 
         // Create request
-        $request = $this->client->get($resource);
-
-        // GET
-        $response = $request->send();
-        $data = $response->json();
+        $data = $this->auth->request('GET', $resource);
 
         return $data;
     }
@@ -113,14 +88,10 @@ class Client
      */
     public function assetsDelete($id)
     {
-        $resource = 'assets/' . $id . '.json';
+        $resource = '/assets/' . $id . '.json';
 
         // Create request
-        $request = $this->client->delete($resource);
-
-        // DELETE
-        $response = $request->send();
-        $data = $response->json();
+        $data = $this->auth->request('DELETE', $resource);
 
         return $data;
     }
@@ -137,22 +108,18 @@ class Client
      */
     public function assetsTagsAdd($id, $tag)
     {
-        $resource = 'assets/' . $id . '/tags.json';
+        $resource = '/assets/' . $id . '/tags.json';
 
         $parameters = array(
             'name' => $tag,
         );
 
         // Create request
-        $request = $this->client->post(
+        $data = $this->auth->request(
+            'POST',
             $resource,
-            array(),
             $parameters
         );
-
-        // POST
-        $response = $request->send();
-        $data = $response->json();
 
         return $data;
     }
@@ -169,22 +136,18 @@ class Client
      */
     public function assetsTagsAddById($id, $tag)
     {
-        $resource = 'assets/' . $id . '/tags/' . $tag . '.json';
+        $resource = '/assets/' . $id . '/tags/' . $tag . '.json';
 
         $parameters = array(
             'query' => array('method' => 'link'),
         );
 
         // Create request
-        $request = $this->client->get(
+        $data = $this->auth->request(
+            'GET',
             $resource,
-            array(),
             $parameters
         );
-
-        // GET
-        $response = $request->send();
-        $data = $response->json();
 
         return $data;
     }
@@ -201,18 +164,14 @@ class Client
      */
     public function tagsList($limit = 25, $offset = 0)
     {
-        $resource = 'tags.json';
+        $resource = '/tags.json';
 
         // Create request
-        $request = $this->client->get(
+        $data = $this->auth->request(
+            'GET',
             $resource,
-            array(),
             array('query' => array('limit' => (int) $limit, 'offset' => (int) $offset))
         );
-
-        // GET
-        $response = $request->send();
-        $data = $response->json();
 
         return $data;
     }
@@ -228,14 +187,10 @@ class Client
      */
     public function ticketsGet($id)
     {
-        $resource = 'tickets/' . $id . '.json';
+        $resource = '/tickets/' . $id . '.json';
 
         // Create request
-        $request = $this->client->get($resource);
-
-        // GET
-        $response = $request->send();
-        $data = $response->json();
+        $data = $this->auth->request('GET', $resource);
 
         return $data;
     }

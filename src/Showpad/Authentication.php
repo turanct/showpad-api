@@ -22,7 +22,7 @@ class Authentication
     protected $config;
 
     /**
-     * @var \Guzzle\Http\Client Guzzle http client
+     * @var Adapter http client
      */
     protected $client;
 
@@ -30,11 +30,12 @@ class Authentication
      * Construct
      *
      * @param ConfigInterface $config The config object
+     * @param Adapter         $client The http client
      */
-    public function __construct(ConfigInterface $config)
+    public function __construct(ConfigInterface $config, Adapter $client)
     {
         $this->config = $config;
-        $this->client = new \Guzzle\Http\Client($this->config->getEndpoint());
+        $this->client = $client;
     }
 
     /**
@@ -69,7 +70,7 @@ class Authentication
      */
     public function authenticationFinish($code, $redirectUrl)
     {
-        $resource = 'oauth2/token';
+        $resource = $this->config->getEndpoint() . '/oauth2/token';
 
         $parameters = array(
             'grant_type' => 'authorization_code',
@@ -78,18 +79,12 @@ class Authentication
         );
 
         // Auth with basic auth
-        $request = $this->client->post(
+        $data = $this->client->request(
+            'POST',
             $resource,
-            array(),
             $parameters,
-            array(
-                'auth' => array($this->config->getClientId(), $this->config->getClientSecret()),
-            )
+            array('Authorization' => 'Basic ' . base64_encode($this->config->getClientId() . ':' . $this->config->getClientSecret()))
         );
-
-        // POST
-        $response = $request->send();
-        $data = $response->json();
 
         // Overwrite $this->config with new settings
         $this->config->setAccessToken($data['access_token']);
@@ -106,7 +101,7 @@ class Authentication
      */
     public function refreshTokens()
     {
-        $resource = 'oauth2/token';
+        $resource = $this->config->getEndpoint() . '/oauth2/token';
 
         $parameters = array(
             'grant_type' => 'refresh_token',
@@ -114,18 +109,12 @@ class Authentication
         );
 
         // Auth with basic auth
-        $request = $this->client->post(
+        $request = $this->client->request(
+            'POST',
             $resource,
-            array(),
             $parameters,
-            array(
-                'auth' => array($this->config->getClientId(), $this->config->getClientSecret()),
-            )
+            array('Authorization: Basic ' . base64_encode($this->config->getClientId() . ':' . $this->config->getClientSecret()))
         );
-
-        // POST
-        $response = $request->send();
-        $data = $response->json();
 
         // Overwrite $this->config with new settings
         $this->config->setAccessToken($data['access_token']);
@@ -136,12 +125,21 @@ class Authentication
     }
 
     /**
-     * Get configuration
+     * Send an authenticated api request
      *
-     * @return ConfigurationInterface
+     * @param string $method     The HTTP method
+     * @param string $endpoint   The api endpoint to send the request to
+     * @param array  $parameters The parameters for the request (assoc array)
+     *
+     * return mixed
      */
-    public function getConfig()
+    public function request($method, $endpoint, array $parameters = null)
     {
-        return $this->config;
+        $url = $this->config->getEndpoint() . $endpoint;
+
+        // Client should always send OAuth2 tokens in its headers
+        $headers = array('Authorization' => 'Bearer ' . $this->config->getAccessToken());
+
+        return $this->client->request($method, $url, $parameters, $headers);
     }
 }
