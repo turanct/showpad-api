@@ -34,7 +34,7 @@ Please use composer to autoload the Showpad api wrapper! Other methods are not e
 }
 ```
 
-The `turanct/showpad-api-guzzle` library is an adapter for guzzle.
+The `turanct/showpad-api-guzzle` library is an adapter for guzzle. There should be others available in the future, or you can just create your own.
 
 
 ### 2.2 Authentication
