@@ -2,7 +2,7 @@
     "name": "turanct/showpad-api",
     "description": "Wrapper for the Showpad API",
     "type": "library",
-    "homepage": "http://www.sumocoders.be",
+    "homepage": "https://github.com/turanct/showpad-api",
     "license": "MIT",
     "authors": [
         {
@@ -12,9 +12,6 @@
             "role": "Developer"
         }
     ],
-    "require": {
-        "guzzlehttp/guzzle": "3.*"
-    },
     "minimum-stability": "dev",
     "autoload": {
         "psr-0": {

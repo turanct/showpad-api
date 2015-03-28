@@ -27,17 +27,14 @@ Please use composer to autoload the Showpad api wrapper! Other methods are not e
 
 ```json
 {
-	"repositories": [
-		{
-			"type": "git",
-			"url": "https://github.com/turanct/showpad-api.git"
-		}
-	],
 	"require": {
-		"turanct/showpad-api": "master"
+        "turanct/showpad-api-guzzle": "~0.1",
+		"turanct/showpad-api": "~1.0"
 	}
 }
 ```
+
+The `turanct/showpad-api-guzzle` library is an adapter for guzzle.
 
 
 ### 2.2 Authentication
@@ -54,8 +51,12 @@ Please use composer to autoload the Showpad api wrapper! Other methods are not e
 // Create a config object
 $config = new Showpad\ConfigBasic(SHOWPAD_URL, SHOWPAD_APP_ID, SHOWPAD_APP_SECRET, null, null);
 
+// Create a client object
+$guzzleClient = new Guzzle\Http\Client();
+$client = new Showpad\GuzzleAdapter($guzzleClient);
+
 // Create an Authentication object, using the config
-$auth = new Showpad\Authentication($config);
+$auth = new Showpad\Authentication($config, $client);
 
 // Get the url for the first step of the OAuth2 process
 $authorizeUrl = $auth->authenticationStart(SHOWPAD_AUTH_REDIRECT_URL);
@@ -73,8 +74,12 @@ $authorizeUrl = $auth->authenticationStart(SHOWPAD_AUTH_REDIRECT_URL);
 // Create a config object
 $config = new Showpad\ConfigBasic(SHOWPAD_URL, SHOWPAD_APP_ID, SHOWPAD_APP_SECRET, null, null);
 
+// Create a client object
+$guzzleClient = new Guzzle\Http\Client();
+$client = new Showpad\GuzzleAdapter($guzzleClient);
+
 // Create an Authentication object, using the config
-$auth = new Showpad\Authentication($config);
+$auth = new Showpad\Authentication($config, $client);
 
 // Get the OAuth2 tokens using the code from the first step of the OAuth2 process
 $tokens = $auth->authenticationFinish($codeFromFirstStep, SHOWPAD_AUTH_REDIRECT_URL);
@@ -100,8 +105,12 @@ $config = new Showpad\ConfigBasic(
 	$tokens['refresh_token']
 );
 
+// Create a client object
+$guzzleClient = new Guzzle\Http\Client();
+$client = new Showpad\GuzzleAdapter($guzzleClient);
+
 // Create an Authentication object, using the config
-$auth = new Showpad\Authentication($config);
+$auth = new Showpad\Authentication($config, $client);
 
 // Request new tokens
 $tokens = $auth->refreshTokens();
@@ -128,8 +137,12 @@ $config = new Showpad\ConfigBasic(
 	$tokens['refresh_token']
 );
 
+// Create a client object
+$guzzleClient = new Guzzle\Http\Client();
+$client = new Showpad\GuzzleAdapter($guzzleClient);
+
 // Create an Authentication object, using the config
-$auth = new Showpad\Authentication($config);
+$auth = new Showpad\Authentication($config, $client);
 
 // Create a showpad client. This client contains all possible api methods.
 $client = new Showpad\Client($auth);
