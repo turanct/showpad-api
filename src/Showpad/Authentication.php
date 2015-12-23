@@ -109,7 +109,7 @@ class Authentication
         );
 
         // Auth with basic auth
-        $request = $this->client->request(
+        $data = $this->client->request(
             'POST',
             $resource,
             $parameters,
