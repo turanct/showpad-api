@@ -194,4 +194,41 @@ class Client
 
         return $data;
     }
+
+    /**
+     * Get a list of existing channels
+     *
+     * GET /channels.json
+     *
+     * @param int $limit  The max number of items we want to retrieve
+     * @param int $offset The number of items to skip from the top of the list
+     *
+     * @return array
+     */
+    public function channelsList($limit = 25, $offset = 0)
+    {
+        return $this->auth->request(
+            'GET',
+            '/channels.json',
+            array('query' => array('limit' => (int) $limit, 'offset' => (int) $offset))
+        );
+    }
+
+    /**
+     * Add a channel
+     *
+     * POST /channels.json
+     *
+     * @param string $name The channel name
+     *
+     * @return array
+     */
+    public function channelAdd($name)
+    {
+        return $this->auth->request(
+            'POST',
+            '/channels.json',
+            array('name' => $name)
+        );
+    }
 }
