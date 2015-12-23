@@ -109,11 +109,11 @@ class Authentication
         );
 
         // Auth with basic auth
-        $request = $this->client->request(
+        $data = $this->client->request(
             'POST',
             $resource,
             $parameters,
-            array('Authorization: Basic ' . base64_encode($this->config->getClientId() . ':' . $this->config->getClientSecret()))
+            array('Authorization' => 'Basic ' . base64_encode($this->config->getClientId() . ':' . $this->config->getClientSecret()))
         );
 
         // Overwrite $this->config with new settings
