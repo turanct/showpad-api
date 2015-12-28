@@ -254,6 +254,8 @@ class Client
     /**
      * Get a list of existing channels
      *
+     * @note: this works only with API v3
+     *
      * GET /channels.json
      *
      * @param int $limit  The max number of items we want to retrieve
@@ -272,6 +274,8 @@ class Client
 
     /**
      * Add a channel
+     *
+     * @note: this works only with API v3
      *
      * POST /channels.json
      *
