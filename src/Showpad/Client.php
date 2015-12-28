@@ -233,6 +233,25 @@ class Client
     }
 
     /**
+     * Get a list of assets coupled to a certain tag
+     *
+     * GET /tags/{id}/assets.json
+     *
+     * @param int $limit  The max number of items we want to retrieve
+     * @param int $offset The number of items to skip from the top of the list
+     *
+     * @return array
+     */
+    public function tagAssetsList($tagId, $limit = 25, $offset = 0)
+    {
+        return $this->auth->request(
+            'GET',
+            '/tags/' . $tagId . '/assets.json',
+            array('query' => array('limit' => (int) $limit, 'offset' => (int) $offset))
+        );
+    }
+
+    /**
      * Get a list of existing channels
      *
      * GET /channels.json
