@@ -32,6 +32,25 @@ class Client
     }
 
     /**
+     * Get a list of existing assets
+     *
+     * GET /assets.json
+     *
+     * @param int $limit  The max number of items we want to retrieve
+     * @param int $offset The number of items to skip from the top of the list
+     *
+     * @return array
+     */
+    public function assetsList($limit = 25, $offset = 0)
+    {
+        return $this->auth->request(
+            'GET',
+            '/assets.json',
+            array('query' => array('limit' => (int) $limit, 'offset' => (int) $offset))
+        );
+    }
+
+    /**
      * Add an asset
      *
      * POST /assets.json
@@ -177,6 +196,24 @@ class Client
     }
 
     /**
+     * Add a tag
+     *
+     * POST /tags.json
+     *
+     * @param string $name The tag name
+     *
+     * @return array
+     */
+    public function tagAdd($name)
+    {
+        return $this->auth->request(
+            'POST',
+            '/tags.json',
+            array('name' => $name)
+        );
+    }
+
+    /**
      * Get a ticket by id
      *
      * GET /tickets/{id}.json
@@ -193,5 +230,65 @@ class Client
         $data = $this->auth->request('GET', $resource);
 
         return $data;
+    }
+
+    /**
+     * Get a list of assets coupled to a certain tag
+     *
+     * GET /tags/{id}/assets.json
+     *
+     * @param int $limit  The max number of items we want to retrieve
+     * @param int $offset The number of items to skip from the top of the list
+     *
+     * @return array
+     */
+    public function tagAssetsList($tagId, $limit = 25, $offset = 0)
+    {
+        return $this->auth->request(
+            'GET',
+            '/tags/' . $tagId . '/assets.json',
+            array('query' => array('limit' => (int) $limit, 'offset' => (int) $offset))
+        );
+    }
+
+    /**
+     * Get a list of existing channels
+     *
+     * @note: this works only with API v3
+     *
+     * GET /channels.json
+     *
+     * @param int $limit  The max number of items we want to retrieve
+     * @param int $offset The number of items to skip from the top of the list
+     *
+     * @return array
+     */
+    public function channelsList($limit = 25, $offset = 0)
+    {
+        return $this->auth->request(
+            'GET',
+            '/channels.json',
+            array('query' => array('limit' => (int) $limit, 'offset' => (int) $offset))
+        );
+    }
+
+    /**
+     * Add a channel
+     *
+     * @note: this works only with API v3
+     *
+     * POST /channels.json
+     *
+     * @param string $name The channel name
+     *
+     * @return array
+     */
+    public function channelAdd($name)
+    {
+        return $this->auth->request(
+            'POST',
+            '/channels.json',
+            array('name' => $name)
+        );
     }
 }
