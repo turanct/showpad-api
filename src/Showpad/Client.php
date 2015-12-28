@@ -32,6 +32,25 @@ class Client
     }
 
     /**
+     * Get a list of existing assets
+     *
+     * GET /assets.json
+     *
+     * @param int $limit  The max number of items we want to retrieve
+     * @param int $offset The number of items to skip from the top of the list
+     *
+     * @return array
+     */
+    public function assetsList($limit = 25, $offset = 0)
+    {
+        return $this->auth->request(
+            'GET',
+            '/assets.json',
+            array('query' => array('limit' => (int) $limit, 'offset' => (int) $offset))
+        );
+    }
+
+    /**
      * Add an asset
      *
      * POST /assets.json
