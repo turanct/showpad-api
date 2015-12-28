@@ -177,6 +177,24 @@ class Client
     }
 
     /**
+     * Add a tag
+     *
+     * POST /tags.json
+     *
+     * @param string $name The tag name
+     *
+     * @return array
+     */
+    public function tagAdd($name)
+    {
+        return $this->auth->request(
+            'POST',
+            '/tags.json',
+            array('name' => $name)
+        );
+    }
+
+    /**
      * Get a ticket by id
      *
      * GET /tickets/{id}.json
