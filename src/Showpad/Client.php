@@ -172,6 +172,27 @@ class Client
     }
 
     /**
+     * Delete a tag from an asset by tag id
+     *
+     * UNLINK /assets/{id}/tags.json
+     *
+     * @param string $id  The asset id
+     * @param string $tag The tag id
+     *
+     * @return array
+     */
+    public function assetsTagsRemoveById($id, $tag)
+    {
+        return $this->auth->request(
+            'GET',
+            '/assets/' . $id . '/tags/' . $tag . '.json',
+            array(
+                'query' => array('method' => 'unlink'),
+            )
+        );
+    }
+
+    /**
      * Get a list of existing assets
      *
      * GET /assets/{id}/tags.json
