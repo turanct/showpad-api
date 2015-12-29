@@ -172,6 +172,26 @@ class Client
     }
 
     /**
+     * Get a list of existing assets
+     *
+     * GET /assets/{id}/tags.json
+     *
+     * @param int $assetId The id of the asset
+     * @param int $limit  The max number of items we want to retrieve
+     * @param int $offset The number of items to skip from the top of the list
+     *
+     * @return array
+     */
+    public function assetsTagsList($assetId, $limit = 25, $offset = 0)
+    {
+        return $this->auth->request(
+            'GET',
+            '/assets/' . $assetId . '/tags.json',
+            array('query' => array('limit' => (int) $limit, 'offset' => (int) $offset))
+        );
+    }
+
+    /**
      * Get a list of existing tags
      *
      * GET /tags.json
