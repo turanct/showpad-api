@@ -230,7 +230,7 @@ class Client
         $data = $this->auth->request(
             'GET',
             $resource,
-            array('query' => array('name' => (str) $name, 'limit' => (int) $limit, 'offset' => (int) $offset))
+            array('query' => array('name' => $name, 'limit' => (int) $limit, 'offset' => (int) $offset))
         );
 
         return $data;
