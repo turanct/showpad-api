@@ -163,13 +163,32 @@ class Client
 
         // Create request
         $data = $this->auth->request(
-            'GET',
+            'LINK',
             $resource,
             $parameters
         );
 
         return $data;
     }
+    
+    /**
+     * Find tag id by tag name
+     *
+     * POST /assets/{id}/tags.json
+     *
+     * @param string $tag The tag name
+     *
+     * @return tag id
+     */
+    public function getTagByName($tag)
+    {
+        $data = $this->auth->request(
+            'GET',
+            '/tags.json?name=' . $tag . ''
+        );
+        return $data['response']['items']['0']['id'];
+        
+    } 
 
     /**
      * Delete a tag from an asset by tag id
