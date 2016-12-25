@@ -222,7 +222,7 @@ class Client
      *
      * @return array
      */
-    public function tagsList($name ,$limit = 25, $offset = 0)
+    public function tagsList($name, $limit = 25, $offset = 0)
     {
         $resource = '/tags.json';
 
