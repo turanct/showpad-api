@@ -170,25 +170,6 @@ class Client
 
         return $data;
     }
-    
-    /**
-     * Find tag id by tag name
-     *
-     * POST /assets/{id}/tags.json
-     *
-     * @param string $tag The tag name
-     *
-     * @return tag id
-     */
-    public function getTagByName($tag)
-    {
-        $data = $this->auth->request(
-            'GET',
-            '/tags.json?name=' . $tag . ''
-        );
-        return $data['response']['items']['0']['id'];
-        
-    } 
 
     /**
      * Delete a tag from an asset by tag id
@@ -241,7 +222,7 @@ class Client
      *
      * @return array
      */
-    public function tagsList($limit = 25, $offset = 0)
+    public function tagsList($name ,$limit = 25, $offset = 0)
     {
         $resource = '/tags.json';
 
@@ -249,7 +230,7 @@ class Client
         $data = $this->auth->request(
             'GET',
             $resource,
-            array('query' => array('limit' => (int) $limit, 'offset' => (int) $offset))
+            array('query' => array('name' => (str) $name, 'limit' => (int) $limit, 'offset' => (int) $offset))
         );
 
         return $data;
